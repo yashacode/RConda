@@ -2,7 +2,8 @@
 #'
 #' This function reads the DESCRIPTION file in the current directory,
 #' extracts the Depends and Imports dependencies, converts them to
-#' conda-forge package names, and writes an environment.yml file.
+#' conda-forge package names, and writes an environment.yml file
+#' to inst/extdata/ for inclusion in the package.
 #'
 #' @param path Path to DESCRIPTION file. Defaults to "DESCRIPTION" in current dir.
 #' @param r_version Version of R to use in conda env. Default "4.2".
@@ -53,9 +54,13 @@ make_yaml <- function(
     paste0("  - ", sort(r_pkgs))
   )
 
-  file_out <- "environment.yml"
+  # Save to inst/extdata/ inside the source directory
+  extdata_dir <- file.path("inst", "extdata")
+  if (!dir.exists(extdata_dir)) dir.create(extdata_dir, recursive = TRUE)
+
+  file_out <- file.path(extdata_dir, paste0(pkg_name, "-env.yml"))
   writeLines(yaml_lines, file_out)
-  message("✅ Created ", file_out, " with environment name: ", env_name)
+  message("✅ YAML file saved to: ", file_out)
 
   invisible(file_out)
 }
