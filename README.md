@@ -6,6 +6,8 @@ In your R project root directory, run this to make a yaml of required packages f
 make_yaml()
 ```
 
+---------------------------------------------------------------
+
 Then tell your user to do the following to make a Conda env:
 
 1) In R run the following to get the yaml path:
